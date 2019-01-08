@@ -49,3 +49,10 @@ getX() : 获取鼠标横轴坐标
 getY() : 获取鼠标纵轴坐标
 isDown() : 1为左键 2 右键
 ]]--
+
+--系统实践
+love_engine.event = love.event
+--[[
+update类:
+quit() :退出游戏
+]]--

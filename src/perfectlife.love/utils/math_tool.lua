@@ -4,13 +4,22 @@
 --- DateTime: 18-12-14 下午5:13
 --- 数学方法工具模块
 
---获取数组长度的方法
 math_tool = {}
-
+--获取数组长度的方法
 function math_tool.table_leng(t)
     local leng=0
     for k, v in pairs(t) do
         leng=leng+1
     end
     return leng;
+end
+
+--判断数组中是否包含某个值
+function math_tool.IsInTable(value, tbl)
+    for k,v in ipairs(tbl) do
+        if v == value then
+            return true;
+        end
+    end
+    return false;
 end
