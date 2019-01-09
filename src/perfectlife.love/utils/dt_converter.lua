@@ -5,9 +5,10 @@
 --- 数据类型转换模块
 
 dt_converter = {}
+
 function ToStringEx(value)
     if type(value)=='table' then
-        return TableToStr(value)
+        return dt_converter.TableToStr(value)
     elseif type(value)=='string' then
         return "\'"..value.."\'"
     else
@@ -51,6 +52,5 @@ function dt_converter.StrToTable(str)
     if str == nil or type(str) ~= "string" then
         return
     end
-
     return loadstring("return " .. str)()
 end

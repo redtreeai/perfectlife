@@ -40,7 +40,7 @@ love_engine.filesystem = love.filesystem
 setIdentity:设置游戏存档目录名
 getIdentity:获取游戏存档目录名
 newFileData("content","name.filetyle","base64 or other"): 创建一个新的文件对象
-
+read('gamedata.txt',all) :读取存档文件数据
 ]]--
 
 --鼠标交互
@@ -52,9 +52,15 @@ getY() : 获取鼠标纵轴坐标
 isDown() : 1为左键 2 右键
 ]]--
 
---系统实践
+--系统事件
 love_engine.event = love.event
 --[[
 update类:
 quit() :退出游戏
+]]--
+
+--键盘监听
+love_engine.keyboard = love.keyboard
+--[[
+love.keyboard.setTextInput( enable, x, y, w, h )  windows/linux/mac默认支持屏幕输入 但ios/android需要授权
 ]]--

@@ -8,11 +8,13 @@ require('loader')
 require('core.love_engine')
 require('gdata.basedata')
 require('utils.math_tool')
-
+require('utils.dt_converter')
+require('gdata.gamedata')
 eventer = {}
 
 function eventer.dojob(cur_scene,cur_mouse_x,cur_mouse_y,is_left_click,is_right_click)
     --print(cur_scene,cur_mouse_x,cur_mouse_y,is_left_click,is_right_click)
+
     --位于title界面时的操作
     if cur_scene == basedata.SCENE_CODE.TITLE.name then
 
@@ -46,19 +48,76 @@ function eventer.dojob(cur_scene,cur_mouse_x,cur_mouse_y,is_left_click,is_right_
             love_engine.event.quit()
         end
         if basedata.SCENE_CODE.TITLE.is_on_start and is_left_click then
-            --进入角色创建页面
+            --重新开始游戏,进入角色创建页面,初始化角色名
+            gamedata.Player.Name ='gewei'
+            gamedata.Player.Money = 0
             loader.SCENE_STATUS.cur_scene=basedata.SCENE_CODE.CREATE_USER.name
         end
         if basedata.SCENE_CODE.TITLE.is_on_continue and is_left_click then
             --继续游戏,读取存档数据
             last_saving_data = love_engine.filesystem.read('gamedata.txt',all)
+            print(last_saving_data)
             if last_saving_data == nil then
                 --若读取异常，则提示存档文件损坏。
                 basedata.SCENE_CODE.TITLE.is_save_broken = true
             else
-                --正常读取游戏数据，然后进入到游戏主界面
+                --正常游戏存档数据
+                last_saving_data = love_engine.filesystem.read('gamedata.txt',all)
+                --赋值到游戏数据table
+                gamedata = dt_converter.StrToTable(last_saving_data)
+                --页面跳转,直接进入游戏主页面
+                loader.SCENE_STATUS.cur_scene=basedata.SCENE_CODE.MAIN.name
             end
         end
     end
 
+    --位于角色创建界面的时候
+    if cur_scene== basedata.SCENE_CODE.CREATE_USER.name then
+        if 434 < cur_mouse_x and cur_mouse_x < 555 and 624 < cur_mouse_y and cur_mouse_y < 677 then
+            basedata.SCENE_CODE.CREATE_USER.is_on_enter = true
+            --当名字合法时方可点击确认
+            if string.len(gamedata.Player.Name)>0 and is_left_click then
+                --进入游戏主页面
+                loader.SCENE_STATUS.cur_scene = basedata.SCENE_CODE.MAIN.name
+            end
+        else
+            --离开按钮则重置状态
+            basedata.SCENE_CODE.CREATE_USER.is_on_enter = false
+        end
+    end
+
+    --位于游戏主界面时
+    if cur_scene ==basedata.SCENE_CODE.MAIN.name then
+        --保存成功点击屏幕任意位置继续游戏
+        if basedata.SCENE_CODE.MAIN.is_saved == true and is_left_click==true then
+            basedata.SCENE_CODE.MAIN.is_saved = false
+        else
+            if 825 < cur_mouse_x and cur_mouse_x < 882 and 6 < cur_mouse_y and cur_mouse_y < 32 then
+                --鼠标位于保存按钮上
+                basedata.SCENE_CODE.MAIN.is_on_save =true
+                if is_left_click ==true and basedata.SCENE_CODE.MAIN.is_saved == false then
+                    --保存游戏并通知结果
+                    save_data = dt_converter.TableToStr(gamedata)
+                    fileData=love_engine.filesystem.newFileData(save_data,"gamedata.txt","base64")
+                    res =love_engine.filesystem.write("gamedata.txt", fileData)
+                    --保存成功改变场景状态,弹出提示
+                    if res ==true then
+                        basedata.SCENE_CODE.MAIN.is_saved = true
+                        basedata.SCENE_CODE.TITLE.is_save=true
+                    else
+                        --提示保存失败(待补充画面)
+                    end
+                end
+            elseif 940 < cur_mouse_x and cur_mouse_x < 1004 and 6 < cur_mouse_y and cur_mouse_y < 32 then
+                basedata.SCENE_CODE.MAIN.is_on_back = true
+                if is_left_click ==true then
+                    --返回游戏主菜单
+                    loader.SCENE_STATUS.cur_scene = basedata.SCENE_CODE.TITLE.name
+                end
+            else
+                basedata.SCENE_CODE.MAIN.is_on_save =false
+                basedata.SCENE_CODE.MAIN.is_on_back = false
+            end
+        end
+    end
 end

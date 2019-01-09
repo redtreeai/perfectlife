@@ -24,10 +24,20 @@ basedata.SCENE_CODE = {
 
     --角色创建界面
     CREATE_USER = {
-        name = 'create_user'
+        name = 'create_user',
+        --名字是否合法，长度大于0
+        is_user_name_ok = false,
+        --鼠标是否位于确认按钮上
+        is_on_enter = false
     },
     --游戏主界面
     MAIN = {
-        name = 'main'
+        name = 'main',
+        --鼠标是否位于退出按钮
+        is_on_back = false,
+        --鼠标是否位于保存按钮
+        is_on_save = false,
+        --保存成功
+        is_saved = false
     }
 }

@@ -12,7 +12,11 @@ loader = {}
 loader.RESOURCE = {
     title_img = love_engine.graphics.newImage("resource/ui_items/title.jpg"),
     title_nosave_img = love_engine.graphics.newImage("resource/ui_items/title_nosave.jpg"),
-    create_user_img = love_engine.graphics.newImage("resource/ui_items/create_user.jpg")
+    create_user_img = love_engine.graphics.newImage("resource/ui_items/create_user.jpg"),
+    main_img = love_engine.graphics.newImage("resource/ui_items/main.jpg"),
+    tip_saved = love_engine.graphics.newImage("resource/tips/tip_saved.jpg")
+
+
 }
 --初始场景
 loader.SCENE_STATUS = {

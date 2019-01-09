@@ -35,8 +35,8 @@ function painter.dojob(cur_scene)
         end
         --若读取到存档文件，但已损坏，则提示
         if basedata.SCENE_CODE.TITLE.is_save_broken == true then
-            color1 = {1,0,0,1}
-            coloredtext = {color1,"存档文件已损坏"}
+            colort = {1,0,0,1}
+            coloredtext = {colort,"存档文件已损坏"}
             love_engine.graphics.print(coloredtext,381,280)
         end
 
@@ -45,5 +45,29 @@ function painter.dojob(cur_scene)
     --开始游戏进入角色创建页面
     if cur_scene==basedata.SCENE_CODE.CREATE_USER.name then
         love_engine.graphics.draw(loader.RESOURCE.create_user_img, 0, 0)
+        --显示用户输入的用户名
+        colort = {0,0,1,1}
+        coloredtext = {colort,gamedata.Player.Name}
+        love_engine.graphics.printf(coloredtext, 365, 480, 473)
+
+    end
+
+    --进入游戏主页面
+    if cur_scene==basedata.SCENE_CODE.MAIN.name then
+        --绘制游戏主页面ui
+        love_engine.graphics.draw(loader.RESOURCE.main_img, 0, 0)
+        --显示角色昵称
+        colort = {0,0,1,1}
+        coloredtext = {colort,gamedata.Player.Name}
+        love_engine.graphics.print(coloredtext, 100, 8)
+        --显示金币数量
+        colort = {0,0,1,1}
+        coloredtext = {colort,gamedata.Player.Money}
+        love_engine.graphics.print(coloredtext, 400, 8)
+
+        if basedata.SCENE_CODE.MAIN.is_saved == true then
+            --显示tips
+            love_engine.graphics.draw(loader.RESOURCE.tip_saved, 250, 250)
+        end
     end
 end
