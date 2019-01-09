@@ -9,27 +9,41 @@ require('gdata.basedata')
 painter = {}
 --cur_scene为当前场景/状态
 function painter.dojob(cur_scene)
+    --绘制前设置字体
+    love.graphics.setFont(loader.FONT_TYPE.MSYH)
+
     --绘制游戏标题页面
-    if cur_scene == basedata.SCENE_CODE.TITLE then
-        love_engine.graphics.draw(loader.RESOURCE.title_img,0,0)
+    if cur_scene == basedata.SCENE_CODE.TITLE.name then
+        if basedata.SCENE_CODE.TITLE.is_save == false then
+            --无存档
+            love_engine.graphics.draw(loader.RESOURCE.title_nosave_img,0,0)
+        else
+            --有存档
+            love_engine.graphics.draw(loader.RESOURCE.title_img,0,0)
+        end
+        --绘制标题页面中开始按钮被选中的特效
+        if basedata.SCENE_CODE.TITLE.is_on_start == true then
+            love_engine.graphics.rectangle("line", 348, 420, 275, 52)
+        end
+        --绘制标题页面中退出按钮被选中的特效
+        if basedata.SCENE_CODE.TITLE.is_on_exit == true then
+            love_engine.graphics.rectangle("line", 415, 540, 135, 47)
+        end
+        --绘制标题页面中继续按钮被选中的特效
+        if basedata.SCENE_CODE.TITLE.is_on_continue == true then
+            love_engine.graphics.rectangle("line", 381, 310, 210, 50)
+        end
+        --若读取到存档文件，但已损坏，则提示
+        if basedata.SCENE_CODE.TITLE.is_save_broken == true then
+            color1 = {1,0,0,1}
+            coloredtext = {color1,"存档文件已损坏"}
+            love_engine.graphics.print(coloredtext,381,280)
+        end
+
     end
-    --绘制标题页面中开始按钮被选中的特效
-    if cur_scene ==basedata.SCENE_CODE.BF_START then
-        love_engine.graphics.draw(loader.RESOURCE.title_img, 0, 0)
-        love_engine.graphics.rectangle("line", 348, 420, 275, 52)
-    end
-    --绘制标题页面中退出按钮被选中的特效
-    if cur_scene ==basedata.SCENE_CODE.BF_EXIT then
-        love_engine.graphics.draw(loader.RESOURCE.title_img, 0, 0)
-        love_engine.graphics.rectangle("line", 415, 540, 135, 47)
-    end
-    --绘制标题页面中继续按钮被选中的特效
-    if cur_scene ==basedata.SCENE_CODE.BF_EXIT then
-        love_engine.graphics.draw(loader.RESOURCE.title_img, 0, 0)
-        love_engine.graphics.rectangle("line", 381, 317, 593, 360)
-    end
+
     --开始游戏进入角色创建页面
-    if cur_scene==basedata.SCENE_CODE.CREATE_USER then
+    if cur_scene==basedata.SCENE_CODE.CREATE_USER.name then
         love_engine.graphics.draw(loader.RESOURCE.create_user_img, 0, 0)
     end
 end

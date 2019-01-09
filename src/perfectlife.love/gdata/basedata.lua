@@ -8,16 +8,26 @@ basedata = {}
 --游戏场景编号
 basedata.SCENE_CODE = {
     --位于初始界面
-    TITLE = 'title',
-    --选中开始游戏按钮(BF means before)
-    BF_START = 'bf_start',
-    --选中退出游戏按钮
-    BF_EXIT = 'bf_exit',
-    --选中继续游戏按钮
-    BF_CONTINUE = 'bf_continue',
+    TITLE = {
+      name = 'title',
+      --是否含有存档
+      is_save=false,
+      --鼠标是否位于开始游戏按钮
+      is_on_start =false,
+      --鼠标是否位于离开游戏按钮
+      is_on_exit =false,
+      --鼠标是否位于继续游戏按钮（需有存档）
+      is_on_continue=false,
+      --存档是否损坏
+      is_save_broken = false
+    },
 
     --角色创建界面
-    CREATE_USER = 'create_user',
+    CREATE_USER = {
+        name = 'create_user'
+    },
     --游戏主界面
-    MAIN = 'main'
+    MAIN = {
+        name = 'main'
+    }
 }

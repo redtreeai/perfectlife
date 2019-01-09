@@ -11,12 +11,16 @@ loader = {}
 --静态资源
 loader.RESOURCE = {
     title_img = love_engine.graphics.newImage("resource/ui_items/title.jpg"),
+    title_nosave_img = love_engine.graphics.newImage("resource/ui_items/title_nosave.jpg"),
     create_user_img = love_engine.graphics.newImage("resource/ui_items/create_user.jpg")
 }
 --初始场景
 loader.SCENE_STATUS = {
-    cur_scene = basedata.SCENE_CODE.TITLE
+    cur_scene = basedata.SCENE_CODE.TITLE,
 }
-
+--字体
+loader.FONT_TYPE = {
+    MSYH = love_engine.graphics.newFont("resource/font/msyh.TTF",17)--字体文件一定要支持中文，这里使用【微软雅黑】
+}
 
 

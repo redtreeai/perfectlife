@@ -17,10 +17,12 @@ love_engine.graphics = love.graphics
 --[[
 load类 ：
 newImage("test.jpg") 预先加载图片资源
+newFont("msyh.ttf") 加载字体文件
 draw类 ：
 draw(object_name,x_point,y_point) 坐标画笔
 rectangle("line", (var - 1) * 128, 636, 128, 128) 方格阵列
 print(object_name) 文字画笔
+setFont ("绘制前设置字体对象")
 ]]--
 
 --音频处理工具

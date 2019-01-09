@@ -9,11 +9,25 @@ require('loader')
 require('painter')
 require('eventer')
 function love.load()
+    --游戏初始化，先校验存档文件是否存在
+    last_saving_data = love_engine.filesystem.read('gamedata.txt',all)
+    if last_saving_data == nil then
+        --若无存档文件，则加载title_nosave页面,
+        loader.SCENE_STATUS.cur_scene=basedata.SCENE_CODE.TITLE.name
+        basedata.SCENE_CODE.TITLE.is_save=false
+    else
+        --若文档存在，则加载title界面。
+        loader.SCENE_STATUS.cur_scene=basedata.SCENE_CODE.TITLE.name
+        basedata.SCENE_CODE.TITLE.is_save=true
+    end
+
     --捕捉鼠标相关信息
     mouse_left_clicked = false
     mouse_right_clicked = false
     is_left_click = false
     is_right_click = false
+
+
     --预加载媒体资源
     --title_img = love.graphics.newImage("resource/ui_items/title.jpg")
 
@@ -70,8 +84,6 @@ function love.update()
     --重置参数
     is_left_click = false
     is_right_click = false
-
-
 
 end
 
